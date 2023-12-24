@@ -15,8 +15,11 @@ public class OAuth2ClientConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
 			.authorizeHttpRequests(AuthorizationManagerRequestMatcherRegistry -> AuthorizationManagerRequestMatcherRegistry
+//				.requestMatchers("/loginPage").permitAll()
 				.anyRequest().authenticated())
 			.oauth2Login(Customizer.withDefaults());
+//			.oauth2Login(OAuth2LoginConfigurer->OAuth2LoginConfigurer
+//				.loginPage("/loginPage"));
 
 		return httpSecurity.build();
 	}
