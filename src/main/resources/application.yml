@@ -14,7 +14,7 @@ spring:
             client-authentication-method: client_secret_basic
             redirect-uri: http://localhost:8081/login/oauth2/code/keycloak
             scope:
-              - openid
+#              - openid
               - profile
               - email
         provider: ## 공급자 설정
