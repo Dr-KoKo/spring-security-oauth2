@@ -14,7 +14,7 @@ public class OAuth2ClientConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
 			.authorizeHttpRequests(AuthorizationManagerRequestMatcherRegistry -> AuthorizationManagerRequestMatcherRegistry
-				.anyRequest().permitAll());
+				.anyRequest().authenticated());
 
 		httpSecurity
 			.oauth2Login(Customizer.withDefaults());
