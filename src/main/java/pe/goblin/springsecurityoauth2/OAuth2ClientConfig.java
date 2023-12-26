@@ -3,13 +3,15 @@ package pe.goblin.springsecurityoauth2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+
+import static org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI;
 
 @Configuration
 @EnableWebSecurity
@@ -25,7 +27,9 @@ public class OAuth2ClientConfig {
 				.anyRequest().authenticated());
 
 		httpSecurity
-			.oauth2Login(Customizer.withDefaults());
+			.oauth2Login(oAuth2LoginConfigurer->oAuth2LoginConfigurer
+				.authorizationEndpoint(authorizationEndpointConfig -> authorizationEndpointConfig
+					.authorizationRequestResolver(customOAuth2AuthorizationRequestResolver())));
 
 		httpSecurity
 			.logout(logoutConfigurer->logoutConfigurer
@@ -35,6 +39,10 @@ public class OAuth2ClientConfig {
 				.deleteCookies("JSESSIONID"));
 
 		return httpSecurity.build();
+	}
+
+	private OAuth2AuthorizationRequestResolver customOAuth2AuthorizationRequestResolver() {
+		return new CustomOAuth2AuthorizationRequestResolver(clientRegistrationRepository, DEFAULT_AUTHORIZATION_REQUEST_BASE_URI);
 	}
 
 	private LogoutSuccessHandler oidcLogoutSuccessHandler() {
