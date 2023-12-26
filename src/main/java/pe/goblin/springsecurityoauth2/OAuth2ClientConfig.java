@@ -3,6 +3,7 @@ package pe.goblin.springsecurityoauth2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
@@ -20,17 +21,11 @@ public class OAuth2ClientConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
 			.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
-				.requestMatchers("/login").permitAll()
-				.anyRequest().permitAll());
+				.requestMatchers("/home").permitAll()
+				.anyRequest().authenticated());
 
 		httpSecurity
-			.oauth2Login(oAuth2LoginConfigurer->oAuth2LoginConfigurer
-				.loginPage("/login")
-				.authorizationEndpoint(authorizationEndpointConfig -> authorizationEndpointConfig
-					.baseUri("/oauth2/v1/authorization"))
-				.redirectionEndpoint(redirectionEndpointConfig -> redirectionEndpointConfig
-					.baseUri("/login/v1/oauth2/code/*")));
-//				.loginProcessingUrl("/login/v1/oauth2/code/*"));
+			.oauth2Login(Customizer.withDefaults());
 
 		httpSecurity
 			.logout(logoutConfigurer->logoutConfigurer
@@ -44,7 +39,7 @@ public class OAuth2ClientConfig {
 
 	private LogoutSuccessHandler oidcLogoutSuccessHandler() {
 		OidcClientInitiatedLogoutSuccessHandler logoutSuccessHandler = new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
-		logoutSuccessHandler.setPostLogoutRedirectUri("http://localhost:8081/login");
+		logoutSuccessHandler.setPostLogoutRedirectUri("http://localhost:8081/home");
 		return logoutSuccessHandler;
 	}
 }
