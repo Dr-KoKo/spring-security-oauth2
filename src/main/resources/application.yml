@@ -6,25 +6,26 @@ spring:
     oauth2:
       client:
         registration: ## 클라이언트 설정
-          keycloak:
-#            client-name: oauth2-client-app
+          keycloak1:
             client-id: oauth2-client-app
-            client-secret: LCZ3hAZTyzLPscxEs7vPoQOKTTp6k0r3
-#            authorization-grant-type: authorization_code
-#            client-authentication-method: client_secret_basic
-#            redirect-uri: http://localhost:8081/login/oauth2/code/keycloak
+            client-secret: bWjE7n1bnEMIyas3Hkgpyh0JQJQpQJRo
+            client-name: oauth2-client-app
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_basic
+            redirect-uri: http://localhost:8081/client
             scope:
               - openid
               - profile
               - email
+            provider: keycloak
         provider: ## 공급자 설정
           keycloak:
-#            authorization-uri: http://localhost:8080/realms/oauth2/protocol/openid-connect/auth
-#            token-uri: http://localhost:8080/realms/oauth2/protocol/openid-connect/token
-#            jwk-set-uri: http://localhost:8080/realms/oauth2/protocol/openid-connect/certs
-#            user-info-uri: http://localhost:8080/realms/oauth2/protocol/openid-connect/userinfo
             issuer-uri: http://localhost:8080/realms/oauth2
-#            user-name-attribute: preferred_username
+            authorization-uri: http://localhost:8080/realms/oauth2/protocol/openid-connect/auth
+            jwk-set-uri: http://localhost:8080/realms/oauth2/protocol/openid-connect/certs
+            token-uri: http://localhost:8080/realms/oauth2/protocol/openid-connect/token
+            user-info-uri: http://localhost:8080/realms/oauth2/protocol/openid-connect/userinfo
+            user-name-attribute: preferred_username
 
 #---
 #spring:
