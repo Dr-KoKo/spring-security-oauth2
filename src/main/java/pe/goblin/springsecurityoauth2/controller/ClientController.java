@@ -1,4 +1,4 @@
-package pe.goblin.springsecurityoauth2;
+package pe.goblin.springsecurityoauth2.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package pe.goblin.springsecurityoauth2;
+package pe.goblin.springsecurityoauth2.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

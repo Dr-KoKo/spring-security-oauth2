@@ -1,4 +1,4 @@
-package pe.goblin.springsecurityoauth2;
+package pe.goblin.springsecurityoauth2.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,16 +14,11 @@ public class OAuth2ClientConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
 			.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
-				.requestMatchers("/home", "/client").permitAll()
+				.requestMatchers("/", "/oauth2Login", "/client", "/logout").permitAll()
 				.anyRequest().authenticated());
 
 		httpSecurity
-			.oauth2Client(Customizer.withDefaults())
-			.logout(logoutConfigurer -> logoutConfigurer
-				.clearAuthentication(true)
-				.invalidateHttpSession(true)
-				.deleteCookies("JSESSIONID")
-				.logoutSuccessUrl("/home"));
+			.oauth2Client(Customizer.withDefaults());
 
 		return httpSecurity.build();
 	}
