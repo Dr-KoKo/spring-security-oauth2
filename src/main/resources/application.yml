@@ -6,17 +6,13 @@ spring:
     oauth2:
       client:
         registration: ## 클라이언트 설정
-          keycloak1:
-            client-id: oauth2-client-app
-            client-secret: bWjE7n1bnEMIyas3Hkgpyh0JQJQpQJRo
-            client-name: oauth2-client-app
-            authorization-grant-type: authorization_code
-            client-authentication-method: client_secret_basic
-            redirect-uri: http://localhost:8081/client
-            scope:
-              - openid
-              - profile
-              - email
+          keycloak:
+            clientId: oauth2-client-app
+            clientSecret: bWjE7n1bnEMIyas3Hkgpyh0JQJQpQJRo
+            clientName: oauth2-client-app
+            authorizationGrantType: password
+            scope: openid,profile
+            clientAuthenticationMethod: client_secret_basic
             provider: keycloak
         provider: ## 공급자 설정
           keycloak:
