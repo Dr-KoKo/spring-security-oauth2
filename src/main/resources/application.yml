@@ -10,8 +10,7 @@ spring:
             clientId: oauth2-client-app
             clientSecret: bWjE7n1bnEMIyas3Hkgpyh0JQJQpQJRo
             clientName: oauth2-client-app
-            authorizationGrantType: password
-            scope: openid,profile
+            authorizationGrantType: client_credentials
             clientAuthenticationMethod: client_secret_basic
             provider: keycloak
         provider: ## 공급자 설정
